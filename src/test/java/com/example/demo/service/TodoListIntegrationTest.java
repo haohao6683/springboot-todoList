@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import com.example.demo.repository.TodoRepository;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,5 +41,24 @@ public class TodoListIntegrationTest {
                 .andExpect(jsonPath("$[0].id").value(savedTodo.getId()))
                 .andExpect(jsonPath("$[0].text").value(savedTodo.getText()))
                 .andExpect(jsonPath("$[0].status").value(savedTodo.isStatus()));
+    }
+
+    @Test
+    void should_return_todo_when_add_a_todo() throws Exception {
+        //given
+        String todoJSON = " {\n" +
+                "        \"id\": 2,\n" +
+                "        \"text\": \"todo-2\",\n" +
+                "        \"status\": true\n" +
+                "    }";
+
+        //when then
+        mockMvc.perform(post("/todos")
+                .contentType(MediaType.APPLICATION_JSON).content(todoJSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(2))
+                .andExpect(jsonPath("$[0].text").value("todo-2"))
+                .andExpect(jsonPath("$[0].status").value("true"));
     }
 }
