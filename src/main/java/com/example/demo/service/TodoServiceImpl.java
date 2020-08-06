@@ -19,6 +19,11 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
+    public Todo findById(Integer id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
     public Todo addTodo(Todo newTodo) {
         return repository.save(newTodo);
     }
@@ -26,5 +31,14 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public Todo updateTodoById(int id, Todo todo) {
         return repository.save(todo);
+    }
+
+    @Override
+    public boolean deleteTodoByID(Integer id) {
+        if(this.findById(id) == null){
+            return false;
+        }
+        repository.deleteById(id);
+        return true;
     }
 }

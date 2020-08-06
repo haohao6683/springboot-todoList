@@ -28,7 +28,12 @@ public class TodoController {
     }
 
     @PutMapping("/{id}")
-    public Todo updateTodoByID(@PathVariable int id, @RequestBody Todo todo) throws Exception {
+    public Todo updateTodoByID(@PathVariable int id, @RequestBody Todo todo) {
         return todoService.updateTodoById(id, todo);
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean deleteTodoByID(@PathVariable int id) {
+        return todoService.deleteTodoByID(id);
     }
 }
