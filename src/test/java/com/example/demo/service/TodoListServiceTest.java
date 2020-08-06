@@ -1,9 +1,9 @@
-package service;
+package com.example.demo.service;
 
-import model.Todo;
+import com.example.demo.model.Todo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import repository.TodoRepository;
+import com.example.demo.repository.TodoRepository;
 
 import java.util.ArrayList;
 import java.util.List;

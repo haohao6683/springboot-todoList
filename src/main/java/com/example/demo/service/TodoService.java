@@ -1,6 +1,6 @@
-package service;
+package com.example.demo.service;
 
-import model.Todo;
+import com.example.demo.model.Todo;
 
 import java.util.List;
 

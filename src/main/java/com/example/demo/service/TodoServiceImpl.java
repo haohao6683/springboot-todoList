@@ -1,9 +1,11 @@
-package service;
+package com.example.demo.service;
 
-import model.Todo;
-import repository.TodoRepository;
+import com.example.demo.model.Todo;
+import org.springframework.stereotype.Service;
+import com.example.demo.repository.TodoRepository;
 import java.util.List;
 
+@Service
 public class TodoServiceImpl implements TodoService{
     private final TodoRepository repository;
 
@@ -13,7 +15,6 @@ public class TodoServiceImpl implements TodoService{
 
     @Override
     public List<Todo> getTodoList() {
-        List<Todo> todos = repository.findAll();
-        return todos;
+        return repository.findAll();
     }
 }
