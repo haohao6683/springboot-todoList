@@ -2,15 +2,18 @@ package service;
 
 import model.Todo;
 import repository.TodoRepository;
-
 import java.util.List;
 
-public class TodoServiceImpl {
-    public TodoServiceImpl(TodoRepository repository) {
+public class TodoServiceImpl implements TodoService{
+    private final TodoRepository repository;
 
+    public TodoServiceImpl(TodoRepository repository) {
+        this.repository = repository;
     }
 
+    @Override
     public List<Todo> getTodoList() {
-        return null;
+        List<Todo> todos = repository.findAll();
+        return todos;
     }
 }
