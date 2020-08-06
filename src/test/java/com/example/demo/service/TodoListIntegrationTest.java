@@ -56,9 +56,8 @@ public class TodoListIntegrationTest {
         mockMvc.perform(post("/todos")
                 .contentType(MediaType.APPLICATION_JSON).content(todoJSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].id").value(2))
-                .andExpect(jsonPath("$[0].text").value("todo-2"))
-                .andExpect(jsonPath("$[0].status").value("true"));
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.text").value("todo-2"))
+                .andExpect(jsonPath("$.status").value("true"));
     }
 }

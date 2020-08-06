@@ -17,4 +17,9 @@ public class TodoServiceImpl implements TodoService{
     public List<Todo> getTodoList() {
         return repository.findAll();
     }
+
+    @Override
+    public Todo addTodo(Todo newTodo) {
+        return repository.save(newTodo);
+    }
 }

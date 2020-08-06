@@ -1,9 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Todo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import com.example.demo.service.TodoService;
 
 import java.util.List;
@@ -21,4 +20,11 @@ public class TodoController {
     public List<Todo> getTodoList() {
         return todoService.getTodoList();
     }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Todo addEmployee(@RequestBody Todo newTodo) {
+        return todoService.addTodo(newTodo);
+    }
+
 }
