@@ -10,8 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import com.example.demo.repository.TodoRepository;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,6 +57,25 @@ public class TodoListIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.text").value("todo-2"))
+                .andExpect(jsonPath("$.status").value("true"));
+    }
+
+    @Test
+    void should_return_updated_todo_when_update_todo_given_todo() throws Exception {
+        //given
+        Todo savedTodo = todoRepository.save(new Todo(1, "todo-1", true));
+        String employeeInformation = " {\n" +
+                "        \"id\": "+savedTodo.getId()+",\n" +
+                "        \"text\": \"I have updated this todo~\",\n" +
+                "        \"status\": true\n" +
+                "    }";
+
+        //when then
+        mockMvc.perform(put("/todos/" + savedTodo.getId())
+                .contentType(MediaType.APPLICATION_JSON).content(employeeInformation))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.text").value("I have updated this todo~"))
                 .andExpect(jsonPath("$.status").value("true"));
     }
 }
