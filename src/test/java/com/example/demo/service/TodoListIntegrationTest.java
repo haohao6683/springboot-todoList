@@ -9,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import com.example.demo.repository.TodoRepository;
+
+import java.util.ArrayList;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -77,5 +80,19 @@ public class TodoListIntegrationTest {
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.text").value("I have updated this todo~"))
                 .andExpect(jsonPath("$.status").value("true"));
+    }
+
+    @Test
+    void should_return_boolean_when_delete_todo_by_id_given_id() throws Exception {
+        //given
+        Todo savedTodo = todoRepository.save(new Todo(1, "todo-1", true));
+
+        //when
+        mockMvc.perform(delete("/todos/" + savedTodo.getId()))
+                .andExpect(status().isOk());
+
+        //then
+        mockMvc.perform(get("/todos/" + savedTodo.getId()))
+                .andExpect(jsonPath("$[0].id").doesNotHaveJsonPath());
     }
 }
