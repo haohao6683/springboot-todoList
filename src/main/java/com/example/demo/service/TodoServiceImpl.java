@@ -22,4 +22,9 @@ public class TodoServiceImpl implements TodoService{
     public Todo addTodo(Todo newTodo) {
         return repository.save(newTodo);
     }
+
+    @Override
+    public Todo updateTodoById(int id, Todo todo) {
+        return repository.save(todo);
+    }
 }

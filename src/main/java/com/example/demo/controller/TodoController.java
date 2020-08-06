@@ -27,4 +27,8 @@ public class TodoController {
         return todoService.addTodo(newTodo);
     }
 
+    @PutMapping("/{id}")
+    public Todo updateTodoByID(@PathVariable int id, @RequestBody Todo todo) throws Exception {
+        return todoService.updateTodoById(id, todo);
+    }
 }

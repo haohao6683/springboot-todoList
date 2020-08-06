@@ -9,4 +9,6 @@ public interface TodoService {
     List<Todo> getTodoList();
 
     Todo addTodo(Todo newTodo);
+
+    Todo updateTodoById(int id, Todo todo);
 }
